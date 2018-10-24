@@ -49,9 +49,21 @@ params["oFN"]=people.maleNameGen();
 params["oSN"]=people.surnameGen();
 
 reminisce1 = [
-	"I made my way around the outskirts of {firstLoc} and found myself within sight of {v[0]}.",
+	"It was nice out, and the going was easy. I should have realised that I would end up at {firstLoc}, but it came up on me by surprise. It jogged my memory of {oFN}. He loved climbing trees as a kid."
 ]
+reminisce2 = [
+	"He got stuck up a tree at one point, and I had to help him out. He was alright, but I think that was when he started really treating me like a big brother.",
+	"He was stuck up a tree while I was nearby, and I tried to help him out. He landed on me and it was hilarious. Not at the time, but that's when he started really treating me like a big brother."
+]
+reminisce3 = [
+	"{oFN} spent quite a bit of time in and around {firstLoc} when he was younger; there are still some carvings to prove it too."
+]
+
 para.append( random.choice(reminisce1).format(**params))
+para.append( random.choice(reminisce2).format(**params))
+para.append( random.choice(reminisce3).format(**params))
+
+para.append("\n")
 
 # continue journey
 continue1 = [
@@ -98,6 +110,9 @@ if __name__=="__main__":
 	para.append( "We chatted for a while, and I learned that they worked at {church[0]}, the local church for {v[0]}.".format(**params) )
 	para.append( "He mentioned that some of the congregation were originally from {ht}, and offered to take me home.".format(**params) )
 	para = " ".join( para )
-	print( textwrap.fill( para ) )
+	para = para.split("\n")
+	para = [textwrap.fill(textwrap.dedent(x)) for x in para]
+	para = "\n\n".join( para )
+	print( para )
 
 
