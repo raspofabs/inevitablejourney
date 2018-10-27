@@ -50,7 +50,11 @@ class CVillageNameGen:
 			self.VillageNameGen4])
 		self.RiverGen = RiverNameGen
 	def Gen(self):
-		return self.villageNameGenGen()()
+		g = self.villageNameGenGen()()
+		g = g.replace("dlee","dle")
+		g = g.replace("eee","ee")
+		g = g.replace("eing","ing")
+		return g
 
 	
 def VillageNameGen( riverHint = None ):
