@@ -135,9 +135,39 @@ Push( random.choice([
 	"I realised that {oFN} had asked me the same thing a number of times. Was I lost. Though {ohe} had asked it in a more philosphical way.",
 	"As I continued I mulled over the words. Lost. I had been asked if I was lost by {oFN} a number of times. {oHe} had asked me if I felt that maybe I had lost my way in life.",
 	]))
+PushParagraph()
 
 # note the time and head to next village.
+Push( random.choice([
+	"The scenery was lovely, but the day was wearing on. I had enjoyed the walk, but I needed to find somewhere to stay for the night.",
+	]))
+Push( random.choice([
+	"When I got to the junction, I decided to make my way to {v[1]} as it wasn't too far and was still heading away from {ht}.",
+	]))
+Push( random.choice([
+	"It had been a long time since I had completed a trek as long as the one I was planning, so I was pleased to see that the village was furnished with a market street, which I would utilise in the morning in preparation for the rest of my trip.",
+	"On approaching the village, I spotted a bunch of shops that would do the job of kitting me out for the rest of my adventure. I was please about this as I realised that it had been quite some time since I had attempted such a thing.",
+	]))
+
 # Have a quick snack and talk with STAFF about staying in one place.
+people.personGen().populateParams(params,"s1")
+Push( random.choice([
+	"I stopped at the {pub[1]}, as it seemed to be accommodating, and indeed it was, they had a room upstairs I could use that night.",
+	"There weren't any obvious hotels, but when I asked at the {pub[1]}, they were surprised I didn't know they provided overnight stays. I wasn't sure, but took a room nonetheless.",
+	]))
+Push( random.choice([
+	"As it turns out, the {s1Pg} behind the bar was related to the {p2Pg} I met on the road. They had lived around this way for all their lives. Much like {oFN} and I, but they had never left {v[1]}."
+	]))
+Push( random.choice([
+	"{oFN} had been all over the world.",
+	"{oFN} wasn't one for staying in one place very long.",
+	"Sticking in one place never seemed likely for {oFN}",
+	]))
+Push( random.choice([
+	"{oHe} wasn't running away from anything though. That much was clear.",
+	"It wasn't a fault though, it was a sense of adventure that drove {ohim}.",
+	]))
+
 # Wake ready, but aching, old bones.
 # Decide to head to DEST, and need to travel by the old VIA
 # pack a few THINGS, and set off.

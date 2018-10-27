@@ -40,7 +40,14 @@ class CVillageNameGen:
 	def VillageNameGen4(self):
 		return prefixGen() + suffixGen() + " on the " + self.RiverGen()
 	def __init__(self):
-		self.villageNameGenGen = Gen([self.VillageNameGen1,self.VillageNameGen2,self.VillageNameGen3, self.VillageNameGen4])
+		self.villageNameGenGen = Gen([
+			self.VillageNameGen1,
+			self.VillageNameGen1,
+			self.VillageNameGen2,
+			self.VillageNameGen2,
+			self.VillageNameGen3,
+			self.VillageNameGen3,
+			self.VillageNameGen4])
 		self.RiverGen = RiverNameGen
 	def Gen(self):
 		return self.villageNameGenGen()()
