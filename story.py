@@ -3,13 +3,18 @@ import places
 import textwrap
 import people
 
+
 villages = [places.VillageNameGen() for x in range(3)]
 rivers = [places.RiverNameGen() for x in range(3)]
 pubs = [places.PubNameGen() for x in range(3)]
 churches = [places.ChurchNameGen() for x in range(3)]
 lakes = [places.LakeNameGen() for x in range(3)]
 woods = [places.WoodsNameGen() for x in range(3)]
+hr = places.RiverNameGen() # home river
+ht = places.VillageNameGen(hr) # home town
 params = {
+	"ht":ht,
+	"hr":hr,
 	"v":villages,
 	"r":rivers,
 	"pub":pubs,
@@ -17,6 +22,16 @@ params = {
 	"lake":lakes,
 	"wood":woods
 	}
+para = []
+
+def Push( sentence ):
+	global para
+	global params
+	para.append( sentence.format(**params) )
+
+def PushParagraph():
+	global para
+	para.append("\n")
 
 #Story format:
 # I went on a bit of a journey. Why?
@@ -31,47 +46,59 @@ leaveReasons = [
 	]
 
 # Start with home village, give a reason for just changing course.
-hr = places.RiverNameGen() # home river
-ht = places.VillageNameGen(hr) # home town
-params["ht"]=ht
-params["hr"]=hr
-para = [random.choice(leaveReasons).format(**params)]
+Push(random.choice(leaveReasons))
 
-
+# EX: when I left "name" - i "traveled" along the "road|track|path" I came across a "gap|field|meadow|lake"
 course = [
 	"I left {ht} behind, travelling down hill, following the flow of the {hr}."
 	]
-para.append( random.choice(course).format(**params))
+Push( random.choice(course) )
 
 # go via some lake or forest and remember looking after or being looked after by OTHER in such a place.
 params["firstLoc"] = places.WoodsNameGen()
-params["oFN"]=people.maleNameGen();
-params["oSN"]=people.surnameGen();
+other = people.personGen()
+other.populateParams(params,"o")
 
-reminisce1 = [
-	"It was nice out, and the going was easy. I should have realised that I would end up at {firstLoc}, but it came up on me by surprise. It jogged my memory of {oFN}. He loved climbing trees as a kid."
-]
-reminisce2 = [
-	"He got stuck up a tree at one point, and I had to help him out. He was alright, but I think that was when he started really treating me like a big brother.",
-	"He was stuck up a tree while I was nearby, and I tried to help him out. He landed on me and it was hilarious. Not at the time, but that's when he started really treating me like a big brother."
-]
-reminisce3 = [
-	"{oFN} spent quite a bit of time in and around {firstLoc} when he was younger; there are still some carvings to prove it too."
-]
+Push( random.choice([
+	"It was nice out, and the going was easy. I should have realised that I would end up at {firstLoc}, but it came up on me by surprise. It jogged my memory of {oFN}. {oPP} loved climbing trees as a kid."
+]))
+Push( random.choice([
+	"{oPP} got stuck up a tree at one point, and I had to help {oPt} out. {oPP} was alright, but I think that was when {oPp} started really treating me like a big brother.",
+	"{oPP} was stuck up a tree while I was nearby, and I tried to help {oPt} out. {oPP} landed on me and it was hilarious. Not at the time, but that's when {oPp} started really treating me like a big brother."
+]))
+Push( random.choice([
+	"{oFN} spent quite a bit of time in and around {firstLoc} when {oPp} was younger; there are still some carvings to prove it too."
+]))
 
-para.append( random.choice(reminisce1).format(**params))
-para.append( random.choice(reminisce2).format(**params))
-para.append( random.choice(reminisce3).format(**params))
-
-para.append("\n")
+PushParagraph()
 
 # continue journey
-continue1 = [
+Push( random.choice([
 	"I made my way around the outskirts of {firstLoc} and found myself within sight of {v[0]}.",
-]
-para.append( random.choice(continue1).format(**params))
+	"When I found the other side of {firstLoc} I realised I would be soon coming across {v[0]}.",
+	]))
+
+# find the first village, just in time, and meet someone.
+Push( random.choice([
+	"I'd been to {v[0]} before a while back, but couldn't remember much about it, so I was pleasantly surprised that as I approached, I was able to remember enough to find a place to get a bit to eat. I had remembered that the {pub[0]} was a nice place, so headed there.",
+	"After that short trek, I needed some refreshment,  so went in search of it. I stumbled across {pub[0]}, which was just the right kind of place.",
+	]))
+people.personGen().populateParams(params,"p1")
+Push( random.choice([
+	"While waiting to be served, I met a nice {p1Pg} by the name of {p1FN}. {p1PP} was just setting down to have some lunch {p1Pt}self.",
+	"In there, I met a nice {p1Pg} who called {p1Pt}self {p1FN} {p1SN}.",
+	"As I was sorting through my bits, a nice {p1Pg} introduced {p1Pt}self as {p1FN} and we started talking about {v[0]}.",
+	]))
 
 # Met up with someone at the first village (PLACE1), and decided not to turn back.
+Push( random.choice([
+	"We chatted for a while, and I learned that {p1Pp} worked at {church[0]}, which was the local church for most of the people from {v[0]}. {p1PP} mentioned that some of the congregation were originally from {ht}, and offered to take me home.",
+	"It was nice to pass a little time. I learned that {p1Pp} regularly attended {church[0]} and how {p1Pp} had been roped into helping drive some of the congregation to {ht} on shopping trips. {p1PP} then offered to take me back home.",
+	]))
+Push( random.choice([
+	"It was at precisely this point that I realised that I wasn't going back",
+	"It took this offer to bring about the realisation that I was not going to return.",
+	]))
 # Reminice about progressing once you have started.
 # Follow a natural formation, and meet another that leads to talking about OTHER
 # note the time and head to next village.
@@ -102,13 +129,8 @@ para.append( random.choice(continue1).format(**params))
 #reminice layer
 #framing to make it more believable
 
-leaveReason = random.choice(leaveReasons)
-
 if __name__=="__main__":
 
-	para.append( "After a short trek, I needed some refreshment, and found it at {pub[0]} where I met a nice fellow.".format(**params) )
-	para.append( "We chatted for a while, and I learned that they worked at {church[0]}, the local church for {v[0]}.".format(**params) )
-	para.append( "He mentioned that some of the congregation were originally from {ht}, and offered to take me home.".format(**params) )
 	para = " ".join( para )
 	para = para.split("\n")
 	para = [textwrap.fill(textwrap.dedent(x)) for x in para]
