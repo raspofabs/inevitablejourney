@@ -29,12 +29,12 @@ class Person:
 	def populateParams(self, params, prefix):
 		params[prefix+"FN"]=self.fname
 		params[prefix+"SN"]=self.sname
-		params[prefix+"Pp"]=self.pronouns[0]
-		params[prefix+"Pt"]=self.pronouns[1]
-		params[prefix+"Po"]=self.pronouns[2]
-		params[prefix+"PP"]=self.pronouns[0].capitalize()
-		params[prefix+"PT"]=self.pronouns[1].capitalize()
-		params[prefix+"PO"]=self.pronouns[2].capitalize()
+		params[prefix+"he"]=self.pronouns[0]
+		params[prefix+"him"]=self.pronouns[1]
+		params[prefix+"his"]=self.pronouns[2]
+		params[prefix+"He"]=self.pronouns[0].capitalize()
+		params[prefix+"Him"]=self.pronouns[1].capitalize()
+		params[prefix+"His"]=self.pronouns[2].capitalize()
 		params[prefix+"Pg"]=self.gender
 	def __repr__(self):
 		if hasattr(self,"nee"):
