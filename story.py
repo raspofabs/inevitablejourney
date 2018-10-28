@@ -2,12 +2,9 @@ import random
 import places
 import textwrap
 import people
+import vehicle
 
 
-villages = [places.VillageNameGen() for x in range(3)]
-rivers = [places.RiverNameGen() for x in range(3)]
-pubs = [places.PubNameGen() for x in range(3)]
-churches = [places.ChurchNameGen() for x in range(3)]
 lakes = [places.LakeNameGen() for x in range(3)]
 woods = [places.WoodsNameGen() for x in range(3)]
 hr = places.RiverNameGen() # home river
@@ -15,12 +12,6 @@ ht = places.VillageNameGen(hr) # home town
 params = {
 	"ht":ht,
 	"hr":hr,
-	"v":villages,
-	"r":rivers,
-	"pub":pubs,
-	"church":churches,
-	"lake":lakes,
-	"wood":woods
 	}
 para = []
 
@@ -71,27 +62,30 @@ P(
 PushParagraph()
 
 # continue journey
+params["v"] = places.VillageNameGen()
 P(
-	"I made my way around the outskirts of {firstLoc} and found myself within sight of {v[0]}.",
-	"When I found the other side of {firstLoc} I realised I would be soon coming across {v[0]}.",
+	"I made my way around the outskirts of {firstLoc} and found myself within sight of {v}.",
+	"When I found the other side of {firstLoc} I realised I would be soon coming across {v}.",
 	)
 
 # find the first village, just in time, and meet someone.
+params["pub"] = places.pubnameGen()
 P(
-	"I'd been to {v[0]} before a while back, but couldn't remember much about it, so I was pleasantly surprised that as I approached, I was able to remember enough to find a place to get a bit to eat. I had remembered that the {pub[0]} was a nice place, so headed there.",
-	"After that short trek, I needed some refreshment, so went in search of it. I stumbled across {pub[0]}, which was just the right kind of place.",
+	"I'd been to {v} before a while back, but couldn't remember much about it, so I was pleasantly surprised that as I approached, I was able to remember enough to find a place to get a bit to eat. I had remembered that the {pub} was a nice place, so headed there.",
+	"After that short trek, I needed some refreshment, so went in search of it. I stumbled across {pub}, which was just the right kind of place.",
 	)
 people.personGen().populateParams(params,"p1")
 P(
 	"While waiting to be served, I met a nice {p1Pg} by the name of {p1FN}. {p1He} was just setting down to have some lunch {p1him}self.",
 	"In there, I met a nice {p1Pg} who called {p1him}self {p1FN} {p1SN}.",
-	"As I was sorting through my bits, a nice {p1Pg} introduced {p1him}self as {p1FN} and we started talking about {v[0]}.",
+	"As I was sorting through my bits, a nice {p1Pg} introduced {p1him}self as {p1FN} and we started talking about {v}.",
 	)
 
 # Met up with someone at the first village (PLACE1), and decided not to turn back.
+params["church"] = places.ChurchNameGen()
 P(
-	"We chatted for a while, and I learned that {p1he} worked at {church[0]}, which was the local church for most of the people from {v[0]}. {p1He} mentioned that some of the congregation were originally from {ht}, and offered to take me home.",
-	"It was nice to pass a little time. I learned that {p1he} regularly attended {church[0]} and how {p1he} had been roped into helping drive some of the congregation to {ht} on shopping trips. {p1He} then offered to take me back home.",
+	"We chatted for a while, and I learned that {p1he} worked at {church}, which was the local church for most of the people from {v}. {p1He} mentioned that some of the congregation were originally from {ht}, and offered to take me home.",
+	"It was nice to pass a little time. I learned that {p1he} regularly attended {church} and how {p1he} had been roped into helping drive some of the congregation to {ht} on shopping trips. {p1He} then offered to take me back home.",
 	)
 P(
 	"It was at precisely this point that I realised that I wasn't going back",
@@ -101,7 +95,7 @@ PushParagraph()
 
 # Reminice about progressing once you have started.
 P(
-	"I finished up, said goodbye to {p1FN}, then left {pub[0]}. I walked through the village for a bit while my mind wandered.",
+	"I finished up, said goodbye to {p1FN}, then left {pub}. I walked through the village for a bit while my mind wandered.",
 	)
 P(
 	"{oFN} was always doing this. {oHe} was always starting something, and just when you thought {ohe} would give up, {ohe} would change tactics, or redouble {ohis} efforts, and forge on.",
@@ -110,16 +104,16 @@ P(
 	"{oHe} always had a goal. A distant horizon to aim at. That was the main difference between us, I always thought. There {ohe} was, always taking steps towards a goal, and there was I, taking steps.",
 	)
 P(
-	"Now, it's I taking the steps towards a goal. What that goal is, I wasn't sure at the time, but I knew it was away from {ht}, so I started by doing precisely that. Leaving by the opposite road out of the village of {v[0]}.",
+	"Now, it's I taking the steps towards a goal. What that goal is, I wasn't sure at the time, but I knew it was away from {ht}, so I started by doing precisely that. Leaving by the opposite road out of the village of {v}.",
 	)
 PushParagraph()
 
 # Follow a natural formation, and meet another that leads to talking about OTHER
 places.Landmark().populateParams(params,"nf");
 P(
-	"As you leave {v[0]}, you always have to travel the road that leads alongside {nfArticleName}. It's a pleasant {nfType}, but it's probably the reason why the village hasn't grown as much as it could.",
+	"As you leave {v}, you always have to travel the road that leads alongside {nfArticleName}. It's a pleasant {nfType}, but it's probably the reason why the village hasn't grown as much as it could.",
 	"As I suspected, I quickly ran into a {nfType} locally known as {nfArticleName}, and had to retrace my steps a little. I found a {nfAvoid} and made progress.",
-	"When you head this way from {v[0]}, you have to travel along {nfArticleName} road. It's a pleasant {nfType}, but many would need to use the {nfAvoid} if they wished to grow the village.",
+	"When you head this way from {v}, you have to travel along {nfArticleName} road. It's a pleasant {nfType}, but many would need to use the {nfAvoid} if they wished to grow the village.",
 	)
 P(
 	"I wasn't carrying much, so the going was easy. I traveled for what must have been over a mile without meeting a single solitary soul.",
@@ -127,7 +121,7 @@ P(
 	)
 people.personGen().populateParams(params,"p2")
 P(
-	"At some point, I saw a car coming the other way, and they stopped to see if I was alright. The {p2Pg} driving seemed to think I was lost. I assured {p2him} that I was fine, and they drove off.",
+	"At some point, I saw a car coming the other way, and they stopped to see if I was alright. The {p2Pg} driving seemed to think I was lost. I assured {p2him} that I was fine, and {p2he} drove off.",
 	"I walked past a little road side cafe at some point. The {p2Pg} at the counter asked if I was lost, but I assured them I was just taking a walk. {p2He} wished me well, and I continued on my way.",
 	)
 P(
@@ -137,11 +131,12 @@ P(
 PushParagraph()
 
 # note the time and head to next village.
+params["v"] = places.VillageNameGen()
 P(
 	"The scenery was lovely, but the day was wearing on. I had enjoyed the walk, but I needed to find somewhere to stay for the night.",
 	)
 P(
-	"When I got to the junction, I decided to make my way to {v[1]} as it wasn't too far and was still heading away from {ht}.",
+	"When I got to the junction, I decided to make my way to {v} as it wasn't too far and was still heading away from {ht}.",
 	)
 P(
 	"It had been a long time since I had completed a trek as long as the one I was planning, so I was pleased to see that the village was furnished with a market street, which I would utilise in the morning in preparation for the rest of my trip.",
@@ -149,13 +144,14 @@ P(
 	)
 
 # Have a quick snack and talk with STAFF about staying in one place.
+params["pub"] = places.pubnameGen()
 people.personGen().populateParams(params,"s1")
 P(
-	"I stopped at the {pub[1]}, as it seemed to be accommodating, and indeed it was, they had a room upstairs I could use that night.",
-	"There weren't any obvious hotels, but when I asked at the {pub[1]}, they were surprised I didn't know they provided overnight stays. I wasn't sure, but took a room nonetheless.",
+	"I stopped at the {pub}, as it seemed to be accommodating, and indeed it was, they had a room upstairs I could use that night.",
+	"There weren't any obvious hotels, but when I asked at the {pub}, they were surprised I didn't know they provided overnight stays. I wasn't sure, but took a room nonetheless.",
 	)
 P(
-	"As it turns out, the {s1Pg} behind the bar was related to the {p2Pg} I met on the road. They had lived around this way for all their lives. Much like {oFN} and I, but they had never left {v[1]}."
+	"As it turns out, the {s1Pg} behind the bar was related to the {p2Pg} I met on the road. They had lived around this way for all their lives. Much like {oFN} and I, but they had never left {v}."
 	)
 P(
 	"{oFN} had been all over the world.",
@@ -180,7 +176,7 @@ P(
 P(
 	"I asked {s1FN}, the {s1Pg} behind the bar, why it was they never left.",
 	"Curious to understand, I ventured the question of why to {s1FN}, the {s1Pg} behind the bar.",
-	"{s1FN}, the {s1Pg} behind the bar, told me that people have asked why they never left {v[1]}.",
+	"{s1FN}, the {s1Pg} behind the bar, told me that people have asked why they never left {v}.",
 	)
 P(
 	"{s1He} said that there was always so much to do here, and not enough time to do it all, what was the point in going anywhere else?",
@@ -211,20 +207,81 @@ P(
 	"I saw a few different bags, sacks, and other carriers, but given my plans, a simple backpack sufficed.",
 	"I grabbed myself a simple backpack. Nothing too large, as I didn't want to carry too much."
 	)
+P(
+	"The shop I sought was near, and had all the essentials.",
+	"For the contents, I went in search of a general store, and found one that suited my needs.",
+	"An empty bag is no good, so the next shop was a general store. I purchased only what I needed. Extra niceties would weigh me down.",
+	)
+PushParagraph()
 
 # Decide to head to DEST, and need to travel by the old VIA
+PushParagraph()
 # pack a few THINGS, and set off.
 # on way, meet someone
+params["v"] = places.VillageNameGen()
+P(
+	"On these unfamiliar roads, the distance always seems a little longer. You look forward only so far, and you're always making your way towards a close by landmark, making the number of landmarks much greater.",
+	"Out there, away from home, each step seemed to take a bit more out of me than the last. Each tree or post or gate was a thing in itself, and the roads were a sequence of events, not a flowing amble like on the routes you normally take.",
+	"When you're on roads you walk regularly, you have a pace. You take in the differences. But here, I was walking and taking in the new. It was tiring just because every corner of the road was a novelty.",
+	)
+people.personGen().populateParams(params,"c")
+vehicle.trafficGen().populateParams(params,"vh")
+P(
+	"Along the way, there was a cottage, all on its own. Just as I was passing, a {cPg} emerged, who joined me on my walk towards {v}.",
+	"As I was passing what looked like a farm, a {cPg} sprung from between the hedges, spotted me, and joined me on my walk towards {v}.",
+	"I was joined on my travels by a {cPg} who had been out this way doing some work. {cHe} was locking up a workshop as I came near, and seemed happy to have the company to walk back to {v}.",
+	)
+P(
+	"{cHis} name was {cFN}, and {cHe} was pleased to meet me. {cHe} told me about how the road used to be even less traveled before, and how it seemed that there were more and more {vhType}s driving in and out of {v} with each season. It was just then that we both jumped as we heard the horn of an approaching {vhType} as it rounded the bend. We moved out of the way while laughing about the impeccable timing.",
+	)
 # make progress and come across PLACE2 never seen before.
+P(
+	"The sun was going down, and the temperature was dropping, so I buttoned up my shirt and continued down hill towards {v}.",
+	"I could see the sun still, just about, over the hills, but it was getting cold. I decided to pick up the pace and try to get to {v} before it got too cold for my thin summer clothes.",
+	)
+PushParagraph()
+
 # stop for refreshments and strike up with PERSON about the history of PLACE2.
 # Reminice about history of OTHER, and how they got on with their life.
 # Look about the village, take a little time, but move on.
+P(
+	"Another village, and another place that people could live their entire lives, but I was just passing through.",
+	"I took one final look around, and thought about how different this place would look to someone who was going to wake up to this street a thousand more times.",
+	)
+P(
+	"I knew where I was going. I needed to see the sea. I needed to get to the end.",
+	"I had a destination. I needed to reach the edge of the land.",
+	"My goal was set. I had an image of the sea in my mind, and I needed to go now.",
+	)
+PushParagraph()
+
 # Make progress and end up in PLACE3 just as the light is making the place look cosy / idylic.
+params["v"] = places.VillageNameGen()
+P(
+	"The sun was going down, and the temperature was dropping, so I buttoned up my shirt and continued down hill towards {v}.",
+	"I could see the sun still, just about, over the hills before the sea, but it was getting cold. I decided to pick up the pace and try to get to {v} before it got too cold for my thin summer clothes.",
+	)
+PushParagraph()
+
 # Stay at the restaurant hotel
+params["pub"] = places.pubnameGen()
+params["c"] = people.coupleGen()
+params["cm"] = params["c"].m
+params["cf"] = params["c"].f
+P(
+	"",
+	)
 # Have a meal and meet a couple, and remember OTHER's first meeting with their love.
+P(
+	"",
+	)
+PushParagraph()
 # 
 # "OTHER would have liked this place. The view out to sea is refreshing."
 # My journey was not done. I had more steps to take. I said goodbye to OTHER that day.
+P(
+	"",
+	)
 
 # OTHER's first job.
 # OTHER's marriage

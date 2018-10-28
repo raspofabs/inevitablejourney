@@ -42,13 +42,15 @@ class CVillageNameGen:
 	def __init__(self):
 		self.villageNameGenGen = Gen([
 			self.VillageNameGen1,
-			self.VillageNameGen1,
 			self.VillageNameGen2,
-			self.VillageNameGen2,
+			self.VillageNameGen3])
+		self.RiverGen = RiverNameGen
+	def SetRiver(self, river):
+		self.RiverGen = generator.GenerateConstant( river )
+		self.villageNameGenGen = Gen([
 			self.VillageNameGen3,
 			self.VillageNameGen3,
 			self.VillageNameGen4])
-		self.RiverGen = RiverNameGen
 	def Gen(self):
 		g = self.villageNameGenGen()()
 		g = g.replace("dlee","dle")
@@ -57,10 +59,10 @@ class CVillageNameGen:
 		return g
 
 	
-def VillageNameGen( riverHint = None ):
+def VillageNameGen( riverHint=None ):
 	vgen = CVillageNameGen()
 	if riverHint != None:
-		vgen.RiverGen = generator.GenerateConstant( riverHint )
+		vgen.SetRiver( riverHint )
 	prename = ""
 	if random.randint(0,5) > 3:
 		prename = overallPrefixGen() + " "
